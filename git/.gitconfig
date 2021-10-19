@@ -1,0 +1,13 @@
+[user]
+	email = castellino96@gmail.com
+	name = Lorenzo Castellino
+	mail = castellino96@gmail.com
+	signingkey = 1489B8A51E072559
+[commit]
+	gpgsign = true
+[push]
+	followTags = true
+[credential]
+	helper = cache
+[core]
+	editor = micro

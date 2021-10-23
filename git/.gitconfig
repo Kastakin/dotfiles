@@ -2,7 +2,7 @@
 	email = castellino96@gmail.com
 	name = Lorenzo Castellino
 	mail = castellino96@gmail.com
-	signingkey = 1489B8A51E072559
+	signingkey = BDA6F572818E02C4
 [commit]
 	gpgsign = true
 [push]
@@ -11,3 +11,5 @@
 	helper = cache
 [core]
 	editor = micro
+[gpg]
+	program = /usr/bin/gpg

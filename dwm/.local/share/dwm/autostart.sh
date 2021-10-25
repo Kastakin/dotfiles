@@ -1,3 +1,4 @@
 #!/bin/sh
 
 dwmblocks &
+picom &

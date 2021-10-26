@@ -1,0 +1,23 @@
+#!/bin/sh
+
+battery () {
+    capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
+    status=$(cat /sys/class/power_supply/BAT0/status)
+    if [ "$status" = "Charging" ]; then
+        symbol=""
+    elif (($capacity <= 25 )); then
+        symbol=""
+    elif (($capacity <= 50)); then
+        symbol=""
+    elif (($capacity <= 75)); then
+        symbol=""
+    elif (($capacity <= 90)); then
+        symbol=""    
+    else
+        symbol=""   
+    fi
+    
+    printf "$symbol $capacity"
+}
+
+echo "$(battery)"

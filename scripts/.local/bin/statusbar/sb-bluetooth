@@ -4,10 +4,11 @@ case $BLOCK_BUTTON in
 	1) rofi-bluetooth;;
 esac
 
-status=$(bluetoothctl show | awk '/Powered/ {print $2}')
+status="$(bluetoothctl show | awk '/Powered/ {print $2}')"
 case $status in
     "yes") symbol="";;
     "no")  symbol="";;
+    *)     symbol="";;
 esac
 
 echo $symbol

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) networkmanager_dmenu;;
+esac
+
+[ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = up ] && wifiIcon=" 直"
+
+if [ "$(cat /sys/class/net/enp5s0/operstate 2>/dev/null)" = up ]; then
+	ethIcon=""
+else
+	if [ ! $wifiIcon ]; then
+		echo "睊"
+		exit 0
+	fi
+fi
+
+echo "$wifiIcon$ethIcon"

@@ -11,3 +11,5 @@
 	helper = cache
 [core]
 	editor = micro
+[init]
+	defaultBranch = main

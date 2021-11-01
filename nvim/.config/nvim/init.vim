@@ -4,12 +4,16 @@ call plug#begin()
 Plug 'gruvbox-community/gruvbox'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'lewis6991/gitsigns.nvim'
+" Plug 'famiu/feline.nvim'
 " Navigation Plugs
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim'
 Plug 'max397574/better-escape.nvim'
+" Filetree Plugs
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
 " LSP Plugs
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
@@ -18,12 +22,16 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'onsails/lspkind-nvim'
+Plug 'windwp/nvim-autopairs'
+Plug 'terrortylor/nvim-comment'
 " Treesitter Plugs
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
@@ -59,6 +67,9 @@ colorscheme gruvbox
 set termguicolors
 
 "" REMAPS AND KEYBINDS
+" Filetree remaps
+nnoremap <C-\> :NvimTreeToggle<CR>
+
 " Paste from clipboard
 xnoremap <leader>p "_dP
 
@@ -94,6 +105,60 @@ xmap        S   <Plug>(vsnip-cut-text)
 
 "" Lua Stuff
 lua <<EOF
+-- nvim-comment
+require('nvim_comment').setup()
+
+-- nvim-autopairs
+require('nvim-autopairs').setup{}
+
+-- nvim-tree
+require'nvim-tree'.setup {
+  disable_netrw       = true,
+  hijack_netrw        = true,
+  open_on_setup       = false,
+  ignore_ft_on_setup  = {},
+  auto_close          = false,
+  open_on_tab         = false,
+  hijack_cursor       = false,
+  update_cwd          = false,
+  update_to_buf_dir   = {
+    enable = true,
+    auto_open = true,
+  },
+  diagnostics = {
+    enable = false,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    }
+  },
+  update_focused_file = {
+    enable      = false,
+    update_cwd  = false,
+    ignore_list = {}
+  },
+  system_open = {
+    cmd  = nil,
+    args = {}
+  },
+  filters = {
+    dotfiles = false,
+    custom = {}
+  },
+  view = {
+    width = 30,
+    height = 30,
+    hide_root_folder = false,
+    side = 'left',
+    auto_resize = false,
+    mappings = {
+      custom_only = false,
+      list = {}
+    }
+  }
+}
 -- gitsigns
 require('gitsigns').setup()
 -- colorizer
@@ -123,7 +188,8 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
 local lspkind = require('lspkind')
 cmp.setup({
 formatting = {
